@@ -1,8 +1,8 @@
-package com.shua.server.entity;
+package cn._94zichao.server.entity;
 
 
-import com.shua.server.util.ByteUtil;
-import com.shua.server.util.Content;
+import cn._94zichao.server.util.ByteUtil;
+import cn._94zichao.server.util.Content;
 
 /**
  * Created by SHUA on 2017/5/15.

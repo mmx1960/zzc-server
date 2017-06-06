@@ -1,4 +1,4 @@
-package com.shua.server.util;
+package cn._94zichao.server.util;
 
 /**
  * Created by SHUA on 2017/5/25.

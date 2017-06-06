@@ -1,4 +1,4 @@
-package com.shua.server.factory;
+package cn._94zichao.server.factory;
 
 import io.netty.channel.ChannelHandlerContext;
 

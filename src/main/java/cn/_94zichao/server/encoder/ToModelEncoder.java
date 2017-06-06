@@ -1,7 +1,7 @@
-package com.shua.server.encoder;
+package cn._94zichao.server.encoder;
 
-import com.shua.server.entity.SocketModel;
-import com.shua.server.util.ByteUtil;
+import cn._94zichao.server.entity.SocketModel;
+import cn._94zichao.server.util.ByteUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
@@ -18,7 +18,7 @@ public class ToModelEncoder extends MessageToByteEncoder<SocketModel> {
         byteBuf.writeByte(socketModel.getType());
         byte[] data = socketModel.getData();
         for (int i = 0;i<data.length;i++){
-            ByteUtil.writeByte(byteBuf,data[i]);
+            ByteUtil.writeByte(byteBuf, data[i]);
         }
         byteBuf.writeByte(socketModel.getEnd());
 

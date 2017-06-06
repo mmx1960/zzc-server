@@ -1,8 +1,8 @@
-package com.shua.server.decoder;
+package cn._94zichao.server.decoder;
 
-import com.shua.server.entity.SocketModel;
-import com.shua.server.util.ByteUtil;
-import com.shua.server.util.Content;
+import cn._94zichao.server.util.ByteUtil;
+import cn._94zichao.server.entity.SocketModel;
+import cn._94zichao.server.util.Content;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;

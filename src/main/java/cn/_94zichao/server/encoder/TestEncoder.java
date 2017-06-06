@@ -1,6 +1,6 @@
-package com.shua.server.encoder;
+package cn._94zichao.server.encoder;
 
-import com.shua.server.entity.SocketModel;
+import cn._94zichao.server.entity.SocketModel;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;

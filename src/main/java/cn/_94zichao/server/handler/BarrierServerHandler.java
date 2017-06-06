@@ -1,10 +1,9 @@
-package com.shua.server.handler;
+package cn._94zichao.server.handler;
 
 
-import com.shua.server.BarrierServer;
-import com.shua.server.entity.SocketModel;
-import com.shua.server.util.ByteUtil;
-import com.shua.server.util.Content;
+import cn._94zichao.server.util.ByteUtil;
+import cn._94zichao.server.entity.SocketModel;
+import cn._94zichao.server.util.Content;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -18,7 +17,6 @@ public class BarrierServerHandler extends ChannelInboundHandlerAdapter { // (1)
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         super.channelActive(ctx);
-        BarrierServer.map.put(ctx.channel().id(), ctx);
     }
 
     @Override
@@ -27,7 +25,7 @@ public class BarrierServerHandler extends ChannelInboundHandlerAdapter { // (1)
         //记录日志
         ctx.writeAndFlush(sk);
         //校验CRC
-        if (!ByteUtil.isCRC(sk.retAllData(),sk.getCrcData())){
+        if (!ByteUtil.isCRC(sk.retAllData(), sk.getCrcData())){
             //发送错误标识的包
             //返回
         }
@@ -65,7 +63,7 @@ public class BarrierServerHandler extends ChannelInboundHandlerAdapter { // (1)
         //channel失效处理,客户端下线或者强制退出等任何情况都触发这个方法
         System.out.println("捕获异常");
         //移除当前channel句柄
-        BarrierServer.map.remove(ctx.channel().id());
+
         super.channelInactive(ctx);
     }
 }
