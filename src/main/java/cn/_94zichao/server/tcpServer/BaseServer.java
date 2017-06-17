@@ -1,8 +1,8 @@
 package cn._94zichao.server.tcpServer;
 
 import cn._94zichao.server.decoder.EndBasedDecoder;
-import cn._94zichao.server.handler.BarrierServerHandler;
 import cn._94zichao.server.encoder.ToModelEncoder;
+import cn._94zichao.server.handler.BarrierServerHandler;
 import cn._94zichao.server.util.Content;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
@@ -170,7 +170,7 @@ public class BaseServer implements Runnable {
     }
 
     public static void main(String[] args) {
-        BaseServer.create().port(9999).decoder(new EndBasedDecoder(Content.END)).encoder(new ToModelEncoder()).in(new BarrierServerHandler()).start();
+        BaseServer.create().port(9999).decoder(new EndBasedDecoder(Content.END,true)).encoder(new ToModelEncoder()).in(new BarrierServerHandler()).start();
     }
 
 }
