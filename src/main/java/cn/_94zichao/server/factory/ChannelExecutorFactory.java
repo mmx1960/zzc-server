@@ -1,5 +1,7 @@
 package cn._94zichao.server.factory;
 
+import cn._94zichao.server.entity.SocketModel;
+import cn._94zichao.server.util.CacheUtil;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
@@ -8,33 +10,34 @@ import io.netty.channel.ChannelHandlerContext;
  */
 public class ChannelExecutorFactory {
 
-    public static Executor getExecutor(ChannelHandlerContext ctx,Object sk){
+    public  Executor getExecutor(SocketModel sk){
 
-        return new Executor(ctx,sk);
+        return new Executor(sk);
     }
 
 
     /**
      * 执行类，向channel写入信息
      */
-    static class Executor {
+      class Executor {
         private ChannelHandlerContext ctx;
-        Object sk ;
-        Executor(ChannelHandlerContext ctx,Object sk){
-            this.ctx = ctx;
-            this.sk = sk;
+        byte[] data;
+        Executor(SocketModel sk){
+            this.data = sk.getData();
+            this.ctx = CacheUtil.getChannelCache(sk.getChannelId());
         }
         public void exec(){
             if (ctx.executor().inEventLoop()) {
-                ctx.writeAndFlush(sk);
+                ctx.writeAndFlush(data);
             } else {
                 ctx.executor().execute(new Runnable() {
                     public void run() {
-                        ctx.pipeline().writeAndFlush(sk);
+                        ctx.pipeline().writeAndFlush(data);
                     }
                 });
 
             }
+            ctx = null;
         }
     }
 
