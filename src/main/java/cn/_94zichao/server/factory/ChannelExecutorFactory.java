@@ -10,7 +10,7 @@ import io.netty.channel.ChannelHandlerContext;
  */
 public class ChannelExecutorFactory {
 
-    public  Executor getExecutor(SocketModel sk){
+    public static Executor getExecutor(SocketModel sk){
 
         return new Executor(sk);
     }
@@ -19,7 +19,7 @@ public class ChannelExecutorFactory {
     /**
      * 执行类，向channel写入信息
      */
-      class Executor {
+      static class Executor {
         private ChannelHandlerContext ctx;
         byte[] data;
         Executor(SocketModel sk){

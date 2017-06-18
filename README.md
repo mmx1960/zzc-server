@@ -39,7 +39,17 @@
  <bean id="xxxxxx" class="cn._94zichao.server.bootstrap.ZzcServer">
  </bean>
 ```
- 
+#### 向客户端发送数据的方法：
+1. 构建[SocketModel]类，将channelId和字节数据置入
+```
+    SocketModel sk = new SocketModel();
+    sk.setChannelId(xxxxx);
+    sk.setData(xxxxx);
+```
+2. 通过[SocketModel]获得执行类并执行 
+```
+    ChannelExecutorFactory.getExecutor(sk).exec();
+```
 [ZzcServer]: ZzcServer.md  "ZzcServer 的启动类"
 [SocketModel]: SocketModel.md  "SocketModel 类"
 ## 教程(未完成，先填个坑)：
@@ -53,5 +63,6 @@
 1. 项目启动时为了配合公司产品的快速开发，写死了端口、防止粘包拆包的分隔符、eventloop线程数量，后期这些都要可配置化。
 2. 未集成日志。
 3. 缺少其他防粘包策略，后面提供。
-4. 待补充。。。。。。
+4. 其他高级API
+5. 待补充。。。。。。
 
