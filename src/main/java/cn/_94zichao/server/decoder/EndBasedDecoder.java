@@ -2,6 +2,7 @@ package cn._94zichao.server.decoder;
 
 import cn._94zichao.server.util.ByteUtil;
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * 以结束符判断一帧是否传输结束的解码器
  *
  **/
+
 public class EndBasedDecoder extends ByteToMessageDecoder {
     private byte end;
     private boolean skip;

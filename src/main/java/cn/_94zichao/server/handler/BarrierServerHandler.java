@@ -1,20 +1,27 @@
 package cn._94zichao.server.handler;
 
 
-import cn._94zichao.server.bootstrap.ZzcServer;
 import cn._94zichao.server.entity.SocketModel;
 import cn._94zichao.server.util.CacheUtil;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
 import java.lang.reflect.Method;
+import java.util.Map;
 
 
 /**
  * Created by zzc on 2017/5/16.
  *根据类型调用不同的业务方法，并发送返回包
  */
+
 public class BarrierServerHandler extends ChannelInboundHandlerAdapter { // (1)
+    public Map<Object,Method[]> methodsMap;
+
+    public BarrierServerHandler(Map<Object, Method[]> methodsMap) {
+        this.methodsMap = methodsMap;
+    }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -28,11 +35,11 @@ public class BarrierServerHandler extends ChannelInboundHandlerAdapter { // (1)
         SocketModel sk = new SocketModel();
         sk.setChannelId(ctx.channel().id().asShortText());
         sk.setData((byte[])msg);
-        if (ZzcServer.methodsMap.size() == 0){
+        if (methodsMap.size() == 0){
 
         }
-        for (Object serviceBean:ZzcServer.methodsMap.keySet()){
-            Method[] methods = ZzcServer.methodsMap.get(serviceBean);
+        for (Object serviceBean:methodsMap.keySet()){
+            Method[] methods = methodsMap.get(serviceBean);
             for (Method method:methods){
                 try {
                     method.invoke(serviceBean,sk);

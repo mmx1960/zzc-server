@@ -4,7 +4,7 @@
 
     <groupId>cn.94zichao</groupId>
     <artifactId>server</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
     <name>zzcserver</name>
     <url>https://github.com/mmx1960/zzc-server</url>

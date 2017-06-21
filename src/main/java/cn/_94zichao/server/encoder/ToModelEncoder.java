@@ -3,6 +3,7 @@ package cn._94zichao.server.encoder;
 import cn._94zichao.server.util.ByteUtil;
 import cn._94zichao.server.util.Content;
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 
@@ -10,6 +11,7 @@ import io.netty.handler.codec.MessageToByteEncoder;
  * Created by zzc on 2017/5/16.
  *
  */
+
 public class ToModelEncoder extends MessageToByteEncoder<byte[]> {
     /**
      * Encode a message into a {@link ByteBuf}. This method will be called for each written message that can be handled
