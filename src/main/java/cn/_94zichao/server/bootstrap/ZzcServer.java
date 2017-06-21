@@ -34,9 +34,6 @@ public class ZzcServer implements ApplicationContextAware,InitializingBean {
         Map<String,Object> map =applicationContext.getBeansWithAnnotation(ZzcService.class);
         for (Object serviceBean : map.values()) {
             try {
-                //获取自定义注解上的value
-                String value = serviceBean.getClass().getAnnotation(ZzcService.class).value();
-                System.out.println("注解上的value: " + value);
                 //拿到类下面的所有方法
                 Method[] methods = serviceBean.getClass().getDeclaredMethods();
                 methodsMap = new HashMap();

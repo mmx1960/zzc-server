@@ -24,6 +24,5 @@ import io.netty.channel.ChannelHandlerContext;
                     }
                 });
             }
-            ctx = null;
         }
     }
