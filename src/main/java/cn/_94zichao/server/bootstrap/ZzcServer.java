@@ -49,42 +49,48 @@ public class ZzcServer implements ApplicationContextAware,InitializingBean {
     }
     @Override
     public void afterPropertiesSet() throws Exception {
-        final EventExecutorGroup group = new DefaultEventExecutorGroup(16);
-        EventLoopGroup bossGroup = new NioEventLoopGroup(); // (1)
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
-        try {
-            ServerBootstrap b = new ServerBootstrap(); // (2)
-            b.group(bossGroup, workerGroup)
-                    .channel(NioServerSocketChannel.class) // (3)
-                    .childHandler(new ChannelInitializer<SocketChannel>() { // (4)
-                        @Override
-                        public void initChannel(SocketChannel ch) throws Exception {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final EventExecutorGroup group = new DefaultEventExecutorGroup(16);
+                EventLoopGroup bossGroup = new NioEventLoopGroup(); // (1)
+                EventLoopGroup workerGroup = new NioEventLoopGroup();
+                try {
+                    ServerBootstrap b = new ServerBootstrap(); // (2)
+                    b.group(bossGroup, workerGroup)
+                            .channel(NioServerSocketChannel.class) // (3)
+                            .childHandler(new ChannelInitializer<SocketChannel>() { // (4)
+                                @Override
+                                public void initChannel(SocketChannel ch) throws Exception {
 
-                            ch.pipeline().addLast(new EndBasedDecoder(Content.END,true));
+                                    ch.pipeline().addLast(new EndBasedDecoder(Content.END,true));
 
-                            //添加编码器
-                            ch.pipeline().addLast(new ToModelEncoder());
+                                    //添加编码器
+                                    ch.pipeline().addLast(new ToModelEncoder());
 
-                            //添加业务处理器
-                            ch.pipeline().addLast(group,new BarrierServerHandler(methodsMap));
+                                    //添加业务处理器
+                                    ch.pipeline().addLast(group,new BarrierServerHandler(methodsMap));
 
-                        }
-                    })
-                    .option(ChannelOption.SO_BACKLOG, 128)          // (5)
-                    .childOption(ChannelOption.SO_KEEPALIVE, true); // (6)
-            // Bind and start to accept incoming connections.
-            ChannelFuture f = b.bind(9999).sync(); // (7)
-            System.out.println(5);
-            // Wait until the server socket is closed.
-            // In this example, this does not happen, but you can do that to gracefully
-            // shut down your server.
-            f.channel().closeFuture().sync();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } finally {
-            workerGroup.shutdownGracefully();
-            bossGroup.shutdownGracefully();
-        }
+                                }
+                            })
+                            .option(ChannelOption.SO_BACKLOG, 128)          // (5)
+                            .childOption(ChannelOption.SO_KEEPALIVE, true); // (6)
+                    // Bind and start to accept incoming connections.
+                    ChannelFuture f = b.bind(9999).sync(); // (7)
+                    System.out.println(5);
+                    // Wait until the server socket is closed.
+                    // In this example, this does not happen, but you can do that to gracefully
+                    // shut down your server.
+                    f.channel().closeFuture().sync();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    workerGroup.shutdownGracefully();
+                    bossGroup.shutdownGracefully();
+                }
+            }
+        }).start();
+
     }
 
 
