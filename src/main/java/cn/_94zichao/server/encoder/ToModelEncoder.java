@@ -7,6 +7,10 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * Created by zzc on 2017/5/16.
  *
@@ -24,11 +28,27 @@ public class ToModelEncoder extends MessageToByteEncoder<byte[]> {
      */
     @Override
     protected void encode(ChannelHandlerContext ctx, byte[] msg, ByteBuf out) throws Exception {
-
-        for (int i = 0; i < msg.length; i++) {
-            ByteUtil.writeByte(out,msg[i]);
+        byte[] all = new byte[256];
+        int i = 1;
+        int j = 1;
+        all[0] = msg[0];
+        while (true){
+            if (i == msg.length-1){
+                break;
+            }
+            byte cur =msg[i];
+            byte[] bytes = ByteUtil.writeByte(cur);
+            if (bytes[0] != cur){
+                all[j++] = bytes[0];
+                all[j++] = bytes[1];
+                i++;
+            }else {
+                all[j++] = msg[i++];
+            }
         }
-        out.writeByte(Content.END);
+        all[j++] = msg[i];
+        out.writeBytes(ByteUtil.getBytes(all,0,j));
+
     }
 
 }

@@ -34,29 +34,29 @@ public class ByteUtil {
         byte[] temp = new byte[buf.readableBytes()];
         temp[0] = buf.readByte();
         int i;
-        for (i= 1;i<temp.length-1;i++){
+        for (i= 1;i<temp.length;i++){
             if (buf.readableBytes() < 1){
                 break;
             }
             temp[i] = readByte(buf);
         }
-        temp[i] = buf.readByte();
 
-        return getBytes(temp,1,i-1);
+        return temp;
     }
 
     /**
      * 写一个字节，如果该字节需要拆分，则拆分后在写
-     * @param buf
      * @param bytes
      */
-    public static void writeByte(ByteBuf buf,byte bytes) {
+    public static byte[] writeByte(byte bytes) {
+        byte[] all = new byte[2];
         if(((bytes^(byte)0xf0)>>3)==0){
-            buf.writeByte((byte)0xf7);
-            buf.writeByte(bytes & (byte)0x0f);
+           all[0]=(byte)0xf7;
+           all[1]=(byte)(bytes & (byte)0x0f);
         }else {
-            buf.writeByte(bytes);
+            all[0]= bytes;
         }
+        return all;
     }
 
     /**
@@ -105,8 +105,8 @@ public class ByteUtil {
      * @return
      */
     public static byte[] getBytes(byte[] data,int start,int end){
-        byte[] all = new byte[end-start-1];
-        System.arraycopy(data, start + 1, all, 0, end - start - 1);
+        byte[] all = new byte[end-start];
+        System.arraycopy(data, start , all, 0, end - start);
         return all;
     }
 
