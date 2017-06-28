@@ -18,7 +18,7 @@
         <dependency>
             <groupId>cn.94zichao</groupId>
             <artifactId>server</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0.0</version>
         </dependency>
 ```
 * 编写自己的业务处理类，标记@ZzcService注解
