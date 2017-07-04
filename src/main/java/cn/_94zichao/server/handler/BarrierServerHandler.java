@@ -3,7 +3,6 @@ package cn._94zichao.server.handler;
 
 import cn._94zichao.server.entity.SocketModel;
 import cn._94zichao.server.util.CacheUtil;
-import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -42,7 +41,10 @@ public class BarrierServerHandler extends ChannelInboundHandlerAdapter { // (1)
             Method[] methods = methodsMap.get(serviceBean);
             for (Method method:methods){
                 try {
-                    method.invoke(serviceBean,sk);
+                    Class[] paramClasses = method.getParameterTypes();
+                    if (paramClasses.length == 1&&paramClasses[0] == SocketModel.class){
+                        method.invoke(serviceBean,sk);
+                    }
                 } catch (Exception e){
 
                 }
