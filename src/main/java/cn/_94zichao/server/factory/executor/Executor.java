@@ -14,9 +14,9 @@ import io.netty.channel.ChannelHandlerContext;
             this.data = sk.getData();
             this.ctx = CacheUtil.getChannelCache(sk.getChannelId());
         }
-        public void exec(){
+        public boolean exec(){
             if (ctx == null){
-                return;
+                return false;
             }
             if (ctx.executor().inEventLoop()) {
                 ctx.writeAndFlush(data);
@@ -27,5 +27,6 @@ import io.netty.channel.ChannelHandlerContext;
                     }
                 });
             }
+            return true;
         }
     }
