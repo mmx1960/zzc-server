@@ -40,8 +40,9 @@ public class ByteUtil {
             }
             temp[i] = readByte(buf);
         }
-
-        return temp;
+        byte[] ret = new byte[i];
+        System.arraycopy(temp,0,ret,0,i);
+        return ret;
     }
 
     /**
