@@ -30,6 +30,7 @@ public class EndBasedDecoder extends ByteToMessageDecoder {
             ByteBuf bf = (ByteBuf) decoded;
             //获取全部字节
             byte[] temp = ByteUtil.readAllBytes(bf);
+            in.release();
             out.add(temp);
         }
     }

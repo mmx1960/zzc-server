@@ -48,7 +48,7 @@ public class ToModelEncoder extends MessageToByteEncoder<byte[]> {
         }
         all[j++] = msg[i];
         out.writeBytes(ByteUtil.getBytes(all,0,j));
-
+        out.release();
     }
 
 }
