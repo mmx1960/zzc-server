@@ -25,12 +25,15 @@ public class EndBasedDecoder extends ByteToMessageDecoder {
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+        if(!ctx.channel().isActive()){
+            return;
+        }
         Object decoded = decode(in,end);
         if (decoded != null) {
             ByteBuf bf = (ByteBuf) decoded;
             //获取全部字节
             byte[] temp = ByteUtil.readAllBytes(bf);
-            in.release();
+
             out.add(temp);
         }
     }

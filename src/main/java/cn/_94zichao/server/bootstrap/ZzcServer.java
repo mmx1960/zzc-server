@@ -13,6 +13,7 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.concurrent.DefaultEventExecutorGroup;
 import io.netty.util.concurrent.EventExecutorGroup;
 import org.springframework.beans.BeansException;
@@ -23,6 +24,7 @@ import org.springframework.context.ApplicationContextAware;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Administrator on 2017/6/17 0017.
@@ -49,7 +51,6 @@ public class ZzcServer implements ApplicationContextAware,InitializingBean {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final EventExecutorGroup group = new DefaultEventExecutorGroup(16);
                 EventLoopGroup bossGroup = new NioEventLoopGroup(); // (1)
                 EventLoopGroup workerGroup = new NioEventLoopGroup();
                 try {
@@ -59,14 +60,14 @@ public class ZzcServer implements ApplicationContextAware,InitializingBean {
                             .childHandler(new ChannelInitializer<SocketChannel>() { // (4)
                                 @Override
                                 public void initChannel(SocketChannel ch) throws Exception {
-
+                                    ch.pipeline().addLast("heartbeat",new IdleStateHandler(15, 0, 0, TimeUnit.SECONDS));
                                     ch.pipeline().addLast(new EndBasedDecoder(Content.END,true));
 
                                     //添加编码器
                                     ch.pipeline().addLast(new ToModelEncoder());
 
                                     //添加业务处理器
-                                    ch.pipeline().addLast(group,new BarrierServerHandler(methodsMap));
+                                    ch.pipeline().addLast(new BarrierServerHandler(methodsMap));
 
                                 }
                             })

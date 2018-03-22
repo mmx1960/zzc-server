@@ -28,6 +28,7 @@ public class ToModelEncoder extends MessageToByteEncoder<byte[]> {
      */
     @Override
     protected void encode(ChannelHandlerContext ctx, byte[] msg, ByteBuf out) throws Exception {
+
         byte[] all = new byte[256];
         int i = 1;
         int j = 1;
@@ -48,7 +49,6 @@ public class ToModelEncoder extends MessageToByteEncoder<byte[]> {
         }
         all[j++] = msg[i];
         out.writeBytes(ByteUtil.getBytes(all,0,j));
-        out.release();
     }
 
 }
