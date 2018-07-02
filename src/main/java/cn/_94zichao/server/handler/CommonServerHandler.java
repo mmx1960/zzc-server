@@ -18,10 +18,10 @@ import java.util.Map;
  *根据类型调用不同的业务方法，并发送返回包
  */
 
-public class BarrierServerHandler extends ChannelInboundHandlerAdapter { // (1)
+public class CommonServerHandler extends ChannelInboundHandlerAdapter { // (1)
     public Map<Object,Method[]> methodsMap;
 
-    public BarrierServerHandler(Map<Object, Method[]> methodsMap) {
+    public CommonServerHandler(Map<Object, Method[]> methodsMap) {
         this.methodsMap = methodsMap;
     }
 

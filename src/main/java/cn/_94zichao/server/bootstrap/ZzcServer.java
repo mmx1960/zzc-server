@@ -3,7 +3,7 @@ package cn._94zichao.server.bootstrap;
 import cn._94zichao.server.annotation.ZzcService;
 import cn._94zichao.server.decoder.EndBasedDecoder;
 import cn._94zichao.server.encoder.ToModelEncoder;
-import cn._94zichao.server.handler.BarrierServerHandler;
+import cn._94zichao.server.handler.CommonServerHandler;
 import cn._94zichao.server.util.Content;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -14,8 +14,6 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.timeout.IdleStateHandler;
-import io.netty.util.concurrent.DefaultEventExecutorGroup;
-import io.netty.util.concurrent.EventExecutorGroup;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
@@ -67,7 +65,7 @@ public class ZzcServer implements ApplicationContextAware,InitializingBean {
                                     ch.pipeline().addLast(new ToModelEncoder());
 
                                     //添加业务处理器
-                                    ch.pipeline().addLast(new BarrierServerHandler(methodsMap));
+                                    ch.pipeline().addLast(new CommonServerHandler(methodsMap));
 
                                 }
                             })

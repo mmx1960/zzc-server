@@ -30,11 +30,17 @@ public class EndBasedDecoder extends ByteToMessageDecoder {
         }
         Object decoded = decode(in,end);
         if (decoded != null) {
-            ByteBuf bf = (ByteBuf) decoded;
-            //获取全部字节
-            byte[] temp = ByteUtil.readAllBytes(bf);
+            ByteBuf bf = null;
+            try{
+                bf = (ByteBuf) decoded;
+                //获取全部字节
+                byte[] temp = ByteUtil.readAllBytes(bf);
 
-            out.add(temp);
+                out.add(temp);
+            }finally {
+                bf.release();
+            }
+
         }
     }
     private Object decode(ByteBuf in,byte end) {
