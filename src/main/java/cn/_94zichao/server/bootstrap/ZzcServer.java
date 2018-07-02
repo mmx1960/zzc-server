@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit;
  * Created by Administrator on 2017/6/17 0017.
  */
 public class ZzcServer implements ApplicationContextAware,InitializingBean {
-    public Map<Object,Method[]> methodsMap;
+    private Map<Object,Method[]> methodsMap;
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         Map<String,Object> map =applicationContext.getBeansWithAnnotation(ZzcService.class);
@@ -73,7 +73,6 @@ public class ZzcServer implements ApplicationContextAware,InitializingBean {
                             .childOption(ChannelOption.SO_KEEPALIVE, true); // (6)
                     // Bind and start to accept incoming connections.
                     ChannelFuture f = b.bind(9999).sync(); // (7)
-                    System.out.println(5);
                     // Wait until the server socket is closed.
                     // In this example, this does not happen, but you can do that to gracefully
                     // shut down your server.
