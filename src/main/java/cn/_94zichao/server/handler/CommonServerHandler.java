@@ -8,6 +8,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -19,15 +21,15 @@ import java.util.Map;
  */
 
 public class CommonServerHandler extends ChannelInboundHandlerAdapter { // (1)
-    public Map<Object,Method[]> methodsMap;
-
+    private final Logger logger = LoggerFactory.getLogger(CommonServerHandler.class);
+    private Map<Object,Method[]> methodsMap;
     public CommonServerHandler(Map<Object, Method[]> methodsMap) {
         this.methodsMap = methodsMap;
     }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("新连接"+ctx.channel().id().asShortText());
+        logger.info("新连接{}",ctx.channel().id().asShortText());
         //缓存channel
         CacheUtil.cacheChannel(ctx);
         super.channelActive(ctx);
@@ -52,7 +54,7 @@ public class CommonServerHandler extends ChannelInboundHandlerAdapter { // (1)
                         }
                     }
                 } catch (Exception e){
-
+                    logger.error("读取失败{}",ctx.channel().id().asShortText(),e);
                 }
             }
         }
@@ -61,14 +63,14 @@ public class CommonServerHandler extends ChannelInboundHandlerAdapter { // (1)
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) { // (4)
         // Close the connection when an exception is raised.
-        System.out.println("捕获异常"+ctx.channel().id().asShortText());
+        logger.info("捕获异常{}",ctx.channel().id().asShortText());
         cause.printStackTrace();
         ctx.close();
     }
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         //channel失效处理,客户端下线或者强制退出等任何情况都触发这个方法
-        System.out.println("连接关闭"+ctx.channel().id().asShortText());
+        logger.info("连接关闭{}",ctx.channel().id().asShortText());
         //移除当前channel句柄
         CacheUtil.removeChannel(ctx);
         super.channelInactive(ctx);
@@ -80,7 +82,7 @@ public class CommonServerHandler extends ChannelInboundHandlerAdapter { // (1)
             IdleStateEvent event = (IdleStateEvent)evt;
             if(event.state() == IdleState.READER_IDLE){
                 ctx.writeAndFlush(Content.REQ);
-                System.out.println("接收消息超时");
+                logger.info("连接空闲{}",ctx.channel().id().asShortText());
             }else{
                 super.userEventTriggered(ctx,evt);
             }

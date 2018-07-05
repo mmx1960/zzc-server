@@ -39,7 +39,7 @@
  <context:component-scan base-package="com.youdomain.xx">
  </context:component-scan>
  <!-- 通信服务器启动类 -->
- <bean id="xxxxxx" class="cn._94zichao.server.bootstrap.ZzcServer">
+ <bean id="xxxxxx" class="cn._94zichao.server.bootstrap.ZzcServerBootstrap">
  </bean>
 ```
 #### 向客户端发送数据的方法：

@@ -4,13 +4,14 @@
 
     <groupId>cn.94zichao</groupId>
     <artifactId>server</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
     <name>zzcserver</name>
     <url>https://github.com/mmx1960/zzc-server</url>
     <description>help person who was not with familiar socket build tcp server faster</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <slf4j.version>1.7.25</slf4j.version>
     </properties>
     <parent>
         <groupId>org.sonatype.oss</groupId>
@@ -38,7 +39,6 @@
         </developer>
     </developers>
 
-
     <dependencies>
         <dependency>
             <groupId>io.netty</groupId>
@@ -64,7 +64,12 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
     <distributionManagement>
         <snapshotRepository>

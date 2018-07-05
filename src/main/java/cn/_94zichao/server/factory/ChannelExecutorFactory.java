@@ -6,7 +6,7 @@ import cn._94zichao.server.util.CacheUtil;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
- * Created by SHUA on 2017/5/18.
+ * Created by zzc on 2017/5/18.
  * 执行类工厂，生成不同socket的执行器
  */
 public class ChannelExecutorFactory {

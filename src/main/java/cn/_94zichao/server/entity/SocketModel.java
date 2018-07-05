@@ -4,7 +4,7 @@ package cn._94zichao.server.entity;
 
 
 /**
- * Created by SHUA on 2017/5/15.
+ * Created by zzc on 2017/5/15.
  */
 public class SocketModel  {
     private String channelId;

@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 存储系统中的缓存
- * Created by SHUA on 2017/6/8.
+ * Created by zzc on 2017/6/8.
  */
 public class CacheUtil {
     public static ConcurrentHashMap channelCache = new ConcurrentHashMap();

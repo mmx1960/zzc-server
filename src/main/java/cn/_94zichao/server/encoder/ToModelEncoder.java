@@ -1,15 +1,9 @@
 package cn._94zichao.server.encoder;
 
 import cn._94zichao.server.util.ByteUtil;
-import cn._94zichao.server.util.Content;
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
-
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Created by zzc on 2017/5/16.
