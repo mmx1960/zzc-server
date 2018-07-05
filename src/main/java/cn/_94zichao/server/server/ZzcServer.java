@@ -40,6 +40,7 @@ public class ZzcServer {
     private EventLoopGroup workerGroup;
 
     private void init(){
+        logger.info("zzcserver初始化......");
         bossGroup = new NioEventLoopGroup(bossGroupThread, new ThreadFactory() {
             private AtomicInteger threadIndex = new AtomicInteger(0);
             @Override
@@ -75,6 +76,7 @@ public class ZzcServer {
     public void startServer(){
         init();
         try {
+            logger.info("zzcserver启动......监听端口:{}",listenPort);
             ServerBootstrap b = new ServerBootstrap(); // (2)
             b.group(bossGroup, workerGroup)
                     .channel(useEpoll() ? EpollServerSocketChannel.class:NioServerSocketChannel.class) // (3)
